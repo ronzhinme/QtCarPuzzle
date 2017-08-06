@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>asserts/tire - back.png</file>
+        <file>asserts/van - carcass.png</file>
+        <file>CarPart.qml</file>
+    </qresource>
+</RCC>
