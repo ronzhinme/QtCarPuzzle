@@ -13,7 +13,43 @@ ApplicationWindow {
         anchors.fill: parent
 
         onPressed: {
-            marea.drag.target = marea.childAt(marea.mouseX, marea.mouseY)
+            marea.drag.target = null;
+            if(!marea.childAt(marea.mouseX, marea.mouseY).isLocked)
+            {
+                marea.drag.target = marea.childAt(marea.mouseX, marea.mouseY);
+            }
+        }
+
+        onMouseXChanged: {
+            van.checkPosition();
+            tire_front.checkPosition();
+            tire_back.checkPosition();
+        }
+
+        onMouseYChanged: {
+            van.checkPosition();
+            tire_front.checkPosition();
+            tire_back.checkPosition();
+        }
+
+        onReleased: {
+
+//            console.log("van: "+van.x+" : "+van.y)
+//            console.log("frt: "+tire_front.x+" : "+tire_front.y)
+//            console.log("bck: "+tire_back.x+" : "+tire_back.y)
+
+            tire_back.inRightPlace();
+            tire_front.inRightPlace();
+            if(tire_back.isInPlace){
+                tire_back.isLocked = true;                
+//                console.log("locked!");
+            }
+            if(tire_front.isInPlace){
+                tire_front.isLocked = true;
+//                console.log("locked!");
+            }
+            tire_front.checkPosition();
+            tire_back.checkPosition();
         }
 
         CarPart {
@@ -22,6 +58,9 @@ ApplicationWindow {
             width: 50
             height: 50
             y: 0
+            owner: van
+            rightX: 10
+            rightY: 175
         }
 
         CarPart {
@@ -38,6 +77,9 @@ ApplicationWindow {
             width: 50
             height: 50
             y: 75
+            owner: van
+            rightX: 127
+            rightY: 175
         }
     }
 }
