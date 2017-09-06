@@ -8,9 +8,18 @@ ApplicationWindow {
     height: 480
     title: qsTr("Hello World")
 
+    function winTest()
+    {
+        if(totalPartCount==lockedPartCount){
+            console.log("You win!!!");
+        }
+    }
+    property int totalPartCount: 2
+    property int lockedPartCount: 0
+
     MouseArea{
         id: marea
-        anchors.fill: parent
+        anchors.fill: parent     
 
         onPressed: {
             marea.drag.target = null;
@@ -34,6 +43,7 @@ ApplicationWindow {
 
         onReleased: {
 
+            lockedPartCount = 0;
 //            console.log("van: "+van.x+" : "+van.y)
 //            console.log("frt: "+tire_front.x+" : "+tire_front.y)
 //            console.log("bck: "+tire_back.x+" : "+tire_back.y)
@@ -41,15 +51,19 @@ ApplicationWindow {
             tire_back.inRightPlace();
             tire_front.inRightPlace();
             if(tire_back.isInPlace){
-                tire_back.isLocked = true;                
-//                console.log("locked!");
+                tire_back.isLocked = true;
+                //console.log("locked!");
+                lockedPartCount += 1
             }
             if(tire_front.isInPlace){
                 tire_front.isLocked = true;
-//                console.log("locked!");
+                //console.log("locked!");
+                lockedPartCount += 1
             }
             tire_front.checkPosition();
             tire_back.checkPosition();
+
+            winTest();
         }
 
         CarPart {
